@@ -1,0 +1,38 @@
+# Dependencias para sistema híbrido (API REST + MCP + LLM)
+
+# Dependencias base del proyecto (actualizadas para compatibilidad)
+fastapi>=0.104.1
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+sqlalchemy>=2.0.23
+psycopg[binary]>=3.1.13
+alembic>=1.12.1
+celery>=5.3.4
+redis>=5.0.1
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+python-dotenv>=1.0.0
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+bcrypt>=4.1.2
+cryptography>=41.0.7
+jinja2>=3.1.0
+routeros-api>=0.17.0
+prometheus-client>=0.19.0
+httpx>=0.27.1  # Actualizado para compatibilidad con MCP
+python-dateutil>=2.8.2
+
+# Dependencias MCP
+mcp>=1.0.0
+
+# Dependencias para LLM local
+ollama>=0.1.0  # Cliente Python para Ollama (opcional)
+
+# Dependencias adicionales para streaming y async
+aiofiles>=23.2.0
+websockets>=11.0.0
+
+# Dependencias opcionales para otros proveedores LLM
+# transformers>=4.35.0  # Para Hugging Face Transformers
+# torch>=2.1.0  # Para modelos PyTorch
+# accelerate>=0.24.0  # Para optimización de modelos

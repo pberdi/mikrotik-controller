@@ -1,0 +1,75 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mikrotik-controller-mcp"
+version = "1.0.0"
+description = "MCP Server para Controlador MikroTik"
+authors = [
+    {name = "MikroTik Controller Team", email = "admin@mikrotik-controller.com"}
+]
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.11"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "mcp>=1.0.0",
+    "fastapi>=0.104.1",
+    "sqlalchemy>=2.0.23",
+    "alembic>=1.12.1",
+    "psycopg[binary]>=3.1.13",
+    "python-jose[cryptography]>=3.3.0",
+    "passlib[bcrypt]>=1.7.4",
+    "python-multipart>=0.0.6",
+    "email-validator>=2.1.0",
+    "uvicorn[standard]>=0.24.0",
+    "python-dotenv>=1.0.0",
+    "cryptography>=41.0.7",
+    "pydantic>=2.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.3",
+    "pytest-asyncio>=0.21.1",
+    "pytest-cov>=4.1.0",
+    "black>=23.11.0",
+    "isort>=5.12.0",
+    "flake8>=6.1.0",
+    "mypy>=1.7.1"
+]
+
+[project.scripts]
+mikrotik-controller-mcp = "mcp_server:main"
+
+[project.urls]
+Homepage = "https://github.com/mikrotik-controller/mcp-server"
+Repository = "https://github.com/mikrotik-controller/mcp-server.git"
+Documentation = "https://mikrotik-controller.readthedocs.io/"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*", "mcp_server"]
+
+[tool.black]
+line-length = 100
+target-version = ['py311']
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true

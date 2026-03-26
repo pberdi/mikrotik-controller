@@ -1,0 +1,447 @@
+[
+  {
+    "name": "root",
+    "url": "http://localhost:8000/",
+    "status": 200,
+    "success": true,
+    "response": {
+      "name": "MikroTik Controller - Sistema H\u00edbrido",
+      "version": "1.0.0",
+      "features": {
+        "rest_api": "API REST completa en /api/*",
+        "mcp_server": "Herramientas MCP en /mcp/*",
+        "llm_local": "LLM local en /llm/*",
+        "hybrid_assistant": "Asistente inteligente en /hybrid/*"
+      },
+      "documentation": {
+        "rest_api": "/docs",
+        "capabilities": "/hybrid/capabilities"
+      }
+    }
+  },
+  {
+    "name": "capabilities",
+    "url": "http://localhost:8000/hybrid/capabilities",
+    "status": 200,
+    "success": true,
+    "response": {
+      "rest_api": {
+        "available": true,
+        "endpoints": [
+          "/api/v1/auth/*",
+          "/api/v1/devices/*",
+          "/api/health/*"
+        ]
+      },
+      "mcp_server": {
+        "available": true,
+        "tools": [
+          "list_devices",
+          "get_device",
+          "create_device",
+          "update_device",
+          "delete_device",
+          "get_device_stats",
+          "list_users",
+          "get_audit_logs",
+          "list_alerts"
+        ]
+      },
+      "llm_local": {
+        "available": true,
+        "model": "llama3.2:3b",
+        "capabilities": [
+          "chat",
+          "tool_calling",
+          "streaming",
+          "mikrotik_expertise",
+          "natural_language_queries"
+        ]
+      },
+      "hybrid_features": {
+        "intelligent_assistant": true,
+        "tool_integration": true,
+        "streaming_chat": true,
+        "natural_language_queries": true
+      }
+    }
+  },
+  {
+    "name": "llm_status",
+    "url": "http://localhost:8000/llm/status",
+    "status": 200,
+    "success": true,
+    "response": {
+      "status": "ready",
+      "model": "llama3.2:3b",
+      "capabilities": [
+        "chat",
+        "tool_calling",
+        "streaming",
+        "mikrotik_expertise",
+        "natural_language_queries"
+      ]
+    }
+  },
+  {
+    "name": "mcp_tools",
+    "url": "http://localhost:8000/mcp/tools",
+    "status": 200,
+    "success": true,
+    "response": {
+      "tools": [
+        {
+          "name": "list_devices",
+          "description": "Lista todos los dispositivos MikroTik",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "tenant_id": {
+                "type": "string",
+                "description": "ID del tenant"
+              },
+              "page": {
+                "type": "integer",
+                "default": 1,
+                "description": "N\u00famero de p\u00e1gina"
+              },
+              "page_size": {
+                "type": "integer",
+                "default": 50,
+                "description": "Elementos por p\u00e1gina"
+              },
+              "status": {
+                "type": "string",
+                "description": "Filtrar por estado"
+              },
+              "online_only": {
+                "type": "boolean",
+                "description": "Solo dispositivos en l\u00ednea"
+              }
+            },
+            "required": [
+              "tenant_id"
+            ]
+          }
+        },
+        {
+          "name": "get_device",
+          "description": "Obtiene informaci\u00f3n detallada de un dispositivo",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "device_id": {
+                "type": "string",
+                "description": "ID del dispositivo"
+              },
+              "tenant_id": {
+                "type": "string",
+                "description": "ID del tenant"
+              }
+            },
+            "required": [
+              "device_id",
+              "tenant_id"
+            ]
+          }
+        },
+        {
+          "name": "create_device",
+          "description": "Crea un nuevo dispositivo MikroTik",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "tenant_id": {
+                "type": "string",
+                "description": "ID del tenant"
+              },
+              "user_id": {
+                "type": "string",
+                "description": "ID del usuario"
+              },
+              "name": {
+                "type": "string",
+                "description": "Nombre del dispositivo"
+              },
+              "host": {
+                "type": "string",
+                "description": "Direcci\u00f3n IP o hostname"
+              },
+              "username": {
+                "type": "string",
+                "description": "Usuario para conexi\u00f3n"
+              },
+              "password": {
+                "type": "string",
+                "description": "Contrase\u00f1a para conexi\u00f3n"
+              },
+              "port": {
+                "type": "integer",
+                "default": 8728,
+                "description": "Puerto de conexi\u00f3n"
+              },
+              "description": {
+                "type": "string",
+                "description": "Descripci\u00f3n del dispositivo"
+              },
+              "site_id": {
+                "type": "string",
+                "description": "ID del sitio (opcional)"
+              }
+            },
+            "required": [
+              "tenant_id",
+              "user_id",
+              "name",
+              "host",
+              "username",
+              "password"
+            ]
+          }
+        },
+        {
+          "name": "update_device",
+          "description": "Actualiza un dispositivo existente",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "device_id": {
+                "type": "string",
+                "description": "ID del dispositivo"
+              },
+              "tenant_id": {
+                "type": "string",
+                "description": "ID del tenant"
+              },
+              "user_id": {
+                "type": "string",
+                "description": "ID del usuario"
+              },
+              "name": {
+                "type": "string",
+                "description": "Nuevo nombre"
+              },
+              "description": {
+                "type": "string",
+                "description": "Nueva descripci\u00f3n"
+              },
+              "site_id": {
+                "type": "string",
+                "description": "Nuevo ID del sitio"
+              }
+            },
+            "required": [
+              "device_id",
+              "tenant_id",
+              "user_id"
+            ]
+          }
+        },
+        {
+          "name": "delete_device",
+          "description": "Elimina un dispositivo",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "device_id": {
+                "type": "string",
+                "description": "ID del dispositivo"
+              },
+              "tenant_id": {
+                "type": "string",
+                "description": "ID del tenant"
+              },
+              "user_id": {
+                "type": "string",
+                "description": "ID del usuario"
+              }
+            },
+            "required": [
+              "device_id",
+              "tenant_id",
+              "user_id"
+            ]
+          }
+        },
+        {
+          "name": "get_device_stats",
+          "description": "Obtiene estad\u00edsticas de dispositivos",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "tenant_id": {
+                "type": "string",
+                "description": "ID del tenant"
+              },
+              "user_id": {
+                "type": "string",
+                "description": "ID del usuario"
+              }
+            },
+            "required": [
+              "tenant_id",
+              "user_id"
+            ]
+          }
+        },
+        {
+          "name": "list_users",
+          "description": "Lista usuarios del sistema",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "tenant_id": {
+                "type": "string",
+                "description": "ID del tenant"
+              },
+              "user_id": {
+                "type": "string",
+                "description": "ID del usuario solicitante"
+              },
+              "page": {
+                "type": "integer",
+                "default": 1,
+                "description": "N\u00famero de p\u00e1gina"
+              },
+              "page_size": {
+                "type": "integer",
+                "default": 50,
+                "description": "Elementos por p\u00e1gina"
+              },
+              "is_active": {
+                "type": "boolean",
+                "description": "Filtrar por estado activo"
+              }
+            },
+            "required": [
+              "tenant_id",
+              "user_id"
+            ]
+          }
+        },
+        {
+          "name": "get_audit_logs",
+          "description": "Obtiene logs de auditor\u00eda",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "tenant_id": {
+                "type": "string",
+                "description": "ID del tenant"
+              },
+              "user_id": {
+                "type": "string",
+                "description": "ID del usuario"
+              },
+              "page": {
+                "type": "integer",
+                "default": 1,
+                "description": "N\u00famero de p\u00e1gina"
+              },
+              "page_size": {
+                "type": "integer",
+                "default": 50,
+                "description": "Elementos por p\u00e1gina"
+              },
+              "action": {
+                "type": "string",
+                "description": "Filtrar por acci\u00f3n"
+              },
+              "resource_type": {
+                "type": "string",
+                "description": "Filtrar por tipo de recurso"
+              },
+              "days": {
+                "type": "integer",
+                "default": 7,
+                "description": "D\u00edas hacia atr\u00e1s"
+              }
+            },
+            "required": [
+              "tenant_id",
+              "user_id"
+            ]
+          }
+        },
+        {
+          "name": "list_alerts",
+          "description": "Lista alertas del sistema",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "tenant_id": {
+                "type": "string",
+                "description": "ID del tenant"
+              },
+              "user_id": {
+                "type": "string",
+                "description": "ID del usuario"
+              },
+              "page": {
+                "type": "integer",
+                "default": 1,
+                "description": "N\u00famero de p\u00e1gina"
+              },
+              "page_size": {
+                "type": "integer",
+                "default": 50,
+                "description": "Elementos por p\u00e1gina"
+              },
+              "severity": {
+                "type": "string",
+                "description": "Filtrar por severidad"
+              },
+              "status": {
+                "type": "string",
+                "description": "Filtrar por estado"
+              }
+            },
+            "required": [
+              "tenant_id",
+              "user_id"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "rest_health",
+    "url": "http://localhost:8000/api/health",
+    "status": 200,
+    "success": true,
+    "response": {
+      "status": "healthy",
+      "version": "1.0.0",
+      "timestamp": "2026-03-26T12:31:33.398240"
+    }
+  },
+  {
+    "name": "MCP Tool Execution",
+    "status": 200,
+    "success": true,
+    "response": {
+      "success": true,
+      "result": "{\n  \"total_devices\": 0,\n  \"by_status\": {\n    \"unregistered\": 0,\n    \"discovered\": 0,\n    \"pending_adoption\": 0,\n    \"adopted\": 0,\n    \"managed\": 0,\n    \"offline\": 0,\n    \"error\": 0,\n    \"retired\": 0\n  },\n  \"by_model\": {},\n  \"online_devices\": 0,\n  \"offline_devices\": 0\n}"
+    }
+  },
+  {
+    "name": "LLM Chat",
+    "status": 200,
+    "success": true,
+    "response": {
+      "response": "\u00a1Hola! Me alegra poder ayudarte con cualquier pregunta sobre dispositivos MikroTik.\n\nMikroTik es una empresa lituana que se especializa en la fabricaci\u00f3n de equipos de redes y sistemas de seguridad. Fueron fundados en 1995 y desde entonces han crecido a ser uno de los proveedores m\u00e1s importantes de soluciones de red y seguridad.\n\nMikroTik ofrece una amplia gama de productos, incluyendo routers, switches, firewalls, aparcamientos wireless y sistemas de seguridad. Los dispositivos MikroTik son conocidos por su alta calidad, confiabilidad y rendimiento.\n\nAlgunos de los productos m\u00e1s populares de MikroTik incluyen:\n\n- Router: Son el coraz\u00f3n de cualquier red y se utilizan para conectarse a Internet o a otros routers.\n- Switch: Ayudan a conectar dispositivos en una red y son especialmente \u00fatiles en entornos que requieren una alta velocidad de transferencia de datos.\n- Firewall: Protegen tu red contra accesos no autorizados e intrusiones cibern\u00e9ticas.\n- Aparcamiento inal\u00e1mbrico: Permite a los dispositivos conectarse a Internet sin cables.\n\nMikroTik tambi\u00e9n ofrece una plataforma de software para administrar y gestionar tus dispositivos, que incluye herramientas para configuraci\u00f3n, monitoreo y seguridad.",
+      "tool_calls": null,
+      "metadata": {
+        "model": "llama3.2:3b",
+        "provider": "ollama"
+      }
+    }
+  },
+  {
+    "name": "Hybrid Assistant",
+    "status": 500,
+    "success": false,
+    "response": "{\"detail\":\"\"}"
+  }
+]
